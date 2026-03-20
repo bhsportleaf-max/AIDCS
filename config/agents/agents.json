@@ -1,0 +1,240 @@
+{
+  "schema_version": "2.0",
+
+  "agent_system": {
+    "enabled": true,
+    "multi_agent_mode": true,
+    "max_parallel_agents": 4,
+    "default_agent": "assistant_agent",
+    "global_confidence_threshold": 0.90
+  },
+
+  "capability_sets": {
+
+    "navigation_control": [
+      "read_navigation",
+      "highlight_navigation",
+      "trigger_route_change"
+    ],
+
+    "content_analysis": [
+      "read_section_content",
+      "generate_summary",
+      "explain_content"
+    ],
+
+    "ui_control": [
+      "inject_ui_component",
+      "update_display_section",
+      "render_component",
+      "append_element"
+    ],
+
+    "analytics": [
+      "track_user_interaction",
+      "record_navigation_event",
+      "collect_usage_metrics"
+    ],
+
+    "system_control": [
+      "scan_dom_structure",
+      "read_dom_registry",
+      "update_section_metadata"
+    ]
+
+  },
+
+  "agents": [
+
+    {
+      "name": "assistant_agent",
+
+      "role": "primary_user_interface",
+
+      "priority": 1,
+
+      "access_level": "high",
+
+      "capabilities": [
+        "navigation_control",
+        "content_analysis",
+        "ui_control"
+      ],
+
+      "allowed_sections": [
+        "AI-Sect-1-HDR",
+        "AI-Sect-2-NAV",
+        "AI-Sect-3-CNT",
+        "AI-Sect-4-DSP",
+        "AI-Sect-5-AIC"
+      ],
+
+      "forbidden_sections": [
+        "AI-Sect-6-FTR"
+      ],
+
+      "confidence_threshold": 0.90,
+
+      "max_actions_per_cycle": 5
+    },
+
+    {
+      "name": "navigation_agent",
+
+      "role": "navigation_manager",
+
+      "priority": 2,
+
+      "access_level": "medium",
+
+      "capabilities": [
+        "navigation_control"
+      ],
+
+      "allowed_sections": [
+        "AI-Sect-2-NAV"
+      ],
+
+      "confidence_threshold": 0.95,
+
+      "max_actions_per_cycle": 3
+    },
+
+    {
+      "name": "content_agent",
+
+      "role": "content_interpreter",
+
+      "priority": 3,
+
+      "access_level": "high",
+
+      "capabilities": [
+        "content_analysis",
+        "ui_control"
+      ],
+
+      "allowed_sections": [
+        "AI-Sect-3-CNT",
+        "AI-Sect-4-DSP"
+      ],
+
+      "confidence_threshold": 0.92,
+
+      "max_actions_per_cycle": 4
+    },
+
+    {
+      "name": "analytics_agent",
+
+      "role": "interaction_tracker",
+
+      "priority": 4,
+
+      "access_level": "restricted",
+
+      "capabilities": [
+        "analytics"
+      ],
+
+      "allowed_sections": [
+        "AI-Sect-1-HDR",
+        "AI-Sect-6-FTR"
+      ],
+
+      "confidence_threshold": 0.98,
+
+      "max_actions_per_cycle": 10
+    },
+
+    {
+      "name": "ui_controller_agent",
+
+      "role": "display_manager",
+
+      "priority": 5,
+
+      "access_level": "high",
+
+      "capabilities": [
+        "ui_control",
+        "system_control"
+      ],
+
+      "allowed_sections": [
+        "AI-Sect-3-CNT",
+        "AI-Sect-4-DSP",
+        "AI-Sect-5-AIC"
+      ],
+
+      "confidence_threshold": 0.97,
+
+      "max_actions_per_cycle": 6
+    },
+
+    {
+      "name": "supervisor_agent",
+
+      "role": "system_governor",
+
+      "priority": 0,
+
+      "access_level": "root",
+
+      "capabilities": [
+        "navigation_control",
+        "content_analysis",
+        "ui_control",
+        "analytics",
+        "system_control"
+      ],
+
+      "allowed_sections": [
+        "AI-Sect-1-HDR",
+        "AI-Sect-2-NAV",
+        "AI-Sect-3-CNT",
+        "AI-Sect-4-DSP",
+        "AI-Sect-5-AIC",
+        "AI-Sect-6-FTR"
+      ],
+
+      "confidence_threshold": 0.99,
+
+      "max_actions_per_cycle": 20,
+
+      "override_permissions": true
+    }
+
+  ],
+
+  "execution_policy": {
+
+    "execution_mode": "priority_based",
+
+    "agent_priority_order": [
+      "supervisor_agent",
+      "assistant_agent",
+      "navigation_agent",
+      "content_agent",
+      "ui_controller_agent",
+      "analytics_agent"
+    ],
+
+    "allow_parallel_execution": true,
+
+    "max_agent_runtime_ms": 200
+  },
+
+  "safety_rules": {
+
+    "validate_section_permissions": true,
+    "validate_capabilities": true,
+    "reject_unknown_agents": true,
+
+    "forbidden_global_actions": [
+      "delete_application_code",
+      "modify_framework_core",
+      "execute_arbitrary_scripts"
+    ]
+  }
+}

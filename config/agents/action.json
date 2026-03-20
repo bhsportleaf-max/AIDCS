@@ -1,0 +1,182 @@
+{
+  "schema_version": "1.0",
+
+  "action_system": {
+    "enabled": true,
+    "strict_mode": true,
+    "reject_unknown_actions": true
+  },
+
+  "actions": [
+
+    {
+      "name": "highlight_navigation_item",
+
+      "description": "highlight a navigation menu item",
+
+      "allowed_sections": [
+        "AI-Sect-2-NAV"
+      ],
+
+      "parameters": [
+        "menu_id"
+      ],
+
+      "dom_operation": "add_class",
+
+      "class_name": "ai-highlight"
+    },
+
+    {
+      "name": "trigger_route_change",
+
+      "description": "navigate to another route",
+
+      "allowed_sections": [
+        "AI-Sect-2-NAV"
+      ],
+
+      "parameters": [
+        "route_path"
+      ],
+
+      "dom_operation": "router_navigation"
+    },
+
+    {
+      "name": "read_section_content",
+
+      "description": "extract readable content from a section",
+
+      "allowed_sections": [
+        "AI-Sect-3-CNT",
+        "AI-Sect-4-DSP"
+      ],
+
+      "parameters": [],
+
+      "dom_operation": "read_dom"
+    },
+
+    {
+      "name": "generate_summary",
+
+      "description": "create a summary of section content",
+
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+
+      "parameters": [
+        "content_block"
+      ],
+
+      "dom_operation": "ai_processing"
+    },
+
+    {
+      "name": "display_chat_message",
+
+      "description": "display message in AI assistant panel",
+
+      "allowed_sections": [
+        "AI-Sect-5-AIC"
+      ],
+
+      "parameters": [
+        "message"
+      ],
+
+      "dom_operation": "append_element"
+    },
+
+    {
+      "name": "recommend_actions",
+
+      "description": "display recommended actions for user",
+
+      "allowed_sections": [
+        "AI-Sect-5-AIC"
+      ],
+
+      "parameters": [
+        "recommendations"
+      ],
+
+      "dom_operation": "render_component"
+    },
+
+    {
+      "name": "update_display_section",
+
+      "description": "update main display section content",
+
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+
+      "parameters": [
+        "component",
+        "data"
+      ],
+
+      "dom_operation": "replace_content"
+    },
+
+    {
+      "name": "inject_ui_component",
+
+      "description": "inject a UI component into a section",
+
+      "allowed_sections": [
+        "AI-Sect-4-DSP",
+        "AI-Sect-5-AIC"
+      ],
+
+      "parameters": [
+        "component_name",
+        "props"
+      ],
+
+      "dom_operation": "component_injection"
+    },
+
+    {
+      "name": "record_navigation_event",
+
+      "description": "log navigation interaction for analytics",
+
+      "allowed_sections": [
+        "AI-Sect-6-FTR"
+      ],
+
+      "parameters": [
+        "event_type",
+        "timestamp"
+      ],
+
+      "dom_operation": "log_event"
+    }
+
+  ],
+
+  "action_execution_rules": {
+
+    "validate_section_permission": true,
+
+    "validate_agent_permission": true,
+
+    "validate_parameters": true,
+
+    "halt_on_forbidden_action": true
+  },
+
+  "security_rules": {
+
+    "forbidden_dom_operations": [
+      "delete_dom_node",
+      "modify_framework_core",
+      "execute_script"
+    ]
+  }
+}

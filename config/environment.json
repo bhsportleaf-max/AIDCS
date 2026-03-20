@@ -1,0 +1,162 @@
+{
+  "schema_version": "1.0",
+
+  "environment_detection": {
+    "variable": "NODE_ENV",
+    "default_environment": "development"
+  },
+
+  "environments": {
+
+    "development": {
+
+      "runtime_mode": "development",
+
+      "aidcs": {
+        "dom_scan_depth": 8,
+        "auto_reindex_sections": true
+      },
+
+      "development_overlay": {
+        "enabled": true,
+        "display_section_labels": true,
+        "toggle_key": "ALT+A",
+        "inspector_key": "ALT+S",
+        "explorer_key": "ALT+E",
+        "overlay_style": {
+          "font_size": "10px",
+          "opacity": 0.7,
+          "background": "#000",
+          "color": "#fff"
+        }
+      },
+
+      "metrics": {
+        "enabled": true
+      },
+
+      "kernel": {
+        "enabled": true,
+        "batch_size": 5,
+        "throttle_ms": 16,
+        "memory_limit": 5000,
+        "max_batches": 20,
+        "coalesce_sections": true,
+        "adaptive_throttle": {
+          "min_ms": 8,
+          "max_ms": 50,
+          "step_ms": 8
+        }
+      },
+
+      "voice": {
+        "enabled": false,
+        "auto_start": false,
+        "sample_ms": 1500,
+        "language": "en"
+      },
+
+      "performance_guard": {
+        "error_threshold": 5,
+        "disable_actions_on_trip": true,
+        "disable_overlay_on_trip": true
+      },
+
+      "logging": {
+        "level": "debug",
+        "show_loader_status": true
+      },
+
+      "validation": {
+        "strict_mode": true,
+        "halt_on_validation_error": true
+      }
+
+    },
+
+    "staging": {
+
+      "runtime_mode": "staging",
+
+      "aidcs": {
+        "dom_scan_depth": 6,
+        "auto_reindex_sections": true
+      },
+
+      "development_overlay": {
+        "enabled": false
+      },
+      "metrics": {
+        "enabled": false
+      },
+      "kernel": {
+        "enabled": false
+      },
+      "voice": {
+        "enabled": false
+      },
+      "performance_guard": {
+        "error_threshold": 3,
+        "disable_actions_on_trip": true,
+        "disable_overlay_on_trip": true
+      },
+
+      "logging": {
+        "level": "warn",
+        "show_loader_status": true
+      },
+
+      "validation": {
+        "strict_mode": true,
+        "halt_on_validation_error": true
+      }
+
+    },
+
+    "production": {
+
+      "runtime_mode": "production",
+
+      "aidcs": {
+        "dom_scan_depth": 5,
+        "auto_reindex_sections": false
+      },
+
+      "development_overlay": {
+        "enabled": false
+      },
+      "metrics": {
+        "enabled": false
+      },
+      "kernel": {
+        "enabled": false
+      },
+      "voice": {
+        "enabled": false
+      },
+      "performance_guard": {
+        "error_threshold": 3,
+        "disable_actions_on_trip": true,
+        "disable_overlay_on_trip": true
+      },
+
+      "logging": {
+        "level": "error",
+        "show_loader_status": false
+      },
+
+      "build_optimization": {
+        "remove_dev_overlay": true,
+        "remove_debug_logs": true,
+        "compress_dom_registry": true
+      },
+
+      "validation": {
+        "strict_mode": true,
+        "halt_on_validation_error": true
+      }
+
+    }
+
+  }
+}

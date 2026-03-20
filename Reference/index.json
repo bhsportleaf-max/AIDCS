@@ -1,0 +1,198 @@
+{
+  "schema_version": "2.0",
+  "system_name": "AIDCS Frontend AI Control Architecture",
+  "target_accuracy": 0.98,
+
+  "core_policy": {
+    "ai_behavior": "structured_dom_control_only",
+    "ai_must_read_index_before_execution": true,
+    "ai_must_follow_section_permissions": true,
+    "ai_must_not_modify_application_logic": true,
+    "ai_must_not_delete_existing_code": true
+  },
+
+  "project_structure": {
+    "allowed_root_folders": [
+      "src",
+      "public",
+      "node_modules",
+      "aidcs",
+      "config"
+    ],
+
+    "required_folders": [
+      "src",
+      "aidcs"
+    ]
+  },
+
+  "aidcs_architecture": {
+
+    "section_prefix": "AI-Sect",
+
+    "section_format": "AI-Sect-{index}-{short_name}",
+
+    "default_sections": [
+      {
+        "index": 1,
+        "name": "header",
+        "short": "HDR"
+      },
+      {
+        "index": 2,
+        "name": "navigation",
+        "short": "NAV"
+      },
+      {
+        "index": 3,
+        "name": "container",
+        "short": "CNT"
+      },
+      {
+        "index": 4,
+        "name": "display",
+        "short": "DSP"
+      },
+      {
+        "index": 5,
+        "name": "ai_panel",
+        "short": "AIC"
+      },
+      {
+        "index": 6,
+        "name": "footer",
+        "short": "FTR"
+      }
+    ],
+
+    "auto_reindex_sections": true,
+    "scan_dom_depth": 6,
+    "generate_dom_map": true
+  },
+
+  "ai_dom_registry": {
+    "registry_file": ".ai-dom-map.json",
+    "auto_generate": true,
+    "required_fields": [
+      "id",
+      "section_name",
+      "dom_path",
+      "content_type"
+    ]
+  },
+
+  "agent_control_policy": {
+
+    "agents": [
+
+      {
+        "name": "navigation_agent",
+        "allowed_sections": ["AI-Sect-2-NAV"]
+      },
+
+      {
+        "name": "content_agent",
+        "allowed_sections": [
+          "AI-Sect-3-CNT",
+          "AI-Sect-4-DSP"
+        ]
+      },
+
+      {
+        "name": "assistant_agent",
+        "allowed_sections": [
+          "AI-Sect-5-AIC"
+        ]
+      },
+
+      {
+        "name": "analytics_agent",
+        "allowed_sections": [
+          "AI-Sect-1-HDR",
+          "AI-Sect-6-FTR"
+        ]
+      }
+
+    ]
+  },
+
+  "development_overlay": {
+
+    "enabled": true,
+    "display_section_labels": true,
+    "overlay_font_size": "10px",
+    "overlay_opacity": 0.7,
+    "toggle_key": "ALT+A"
+  },
+
+  "build_optimization": {
+
+    "remove_dev_overlay": true,
+    "remove_debug_logs": true,
+    "preserve_ai_section_ids": true,
+    "compress_dom_registry": true
+  },
+
+  "validation_pipeline": [
+
+    "structure_validation",
+    "aidcs_section_validation",
+    "dom_registry_validation",
+    "agent_permission_validation",
+    "build_validation"
+
+  ],
+
+  "validation_rules": {
+
+    "structure_validation": {
+      "section_ids_unique": true,
+      "section_prefix_required": true
+    },
+
+    "aidcs_section_validation": {
+      "section_format_required": true,
+      "auto_reindex_if_changed": true
+    },
+
+    "dom_registry_validation": {
+      "registry_file_required": true,
+      "registry_matches_dom": true
+    }
+
+  },
+
+  "runtime_execution_flow": [
+
+    "load_index_config",
+    "scan_dom",
+    "apply_section_ids",
+    "generate_dom_map",
+    "build_ai_context",
+    "validate_agent_permissions",
+    "execute_ai_actions"
+
+  ],
+
+  "safety_rules": {
+
+    "forbidden_ai_actions": [
+      "delete_dom_sections",
+      "rewrite_framework_code",
+      "modify_backend_requests"
+    ],
+
+    "allowed_ai_actions": [
+      "read_dom_sections",
+      "update_display_sections",
+      "inject_ai_ui_components"
+    ]
+  },
+
+  "confidence_thresholds": {
+
+    "minimum_ai_confidence": 0.90,
+    "auto_execute_threshold": 0.98,
+    "require_human_review_below": 0.90
+  }
+}

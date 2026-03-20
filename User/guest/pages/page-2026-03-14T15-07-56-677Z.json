@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-03-14T15:07:56.677Z",
+  "url": "http://localhost:5175/",
+  "title": "Sample Page",
+  "description": "Dev sample",
+  "intent": {
+    "intent": "summarize_page"
+  },
+  "user_input": "summarize page",
+  "registry": [],
+  "needs_llm": true
+}

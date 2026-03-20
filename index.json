@@ -1,0 +1,452 @@
+{
+  "schema_version": "2.0",
+
+  "project_identity": {
+    "project_name": "AIDCS AI Controlled Frontend",
+    "architecture_type": "ai_display_control_system",
+    "target_accuracy": 0.98,
+    "framework_support": [
+      "react",
+      "nextjs",
+      "vue",
+      "angular",
+      "vanilla_js"
+    ]
+  },
+
+  "governance_policy": {
+
+    "ai_must_read_index_before_execution": true,
+    "ai_must_follow_structure": true,
+    "ai_must_not_modify_application_logic": true,
+    "ai_must_not_delete_existing_code": true,
+
+    "decision_sequence": [
+      "load_index_config",
+      "validate_with_schema",
+      "scan_dom_structure",
+      "generate_dom_registry",
+      "build_ai_context",
+      "validate_agent_permissions",
+      "execute_action_engine"
+    ]
+  },
+
+  "project_structure": {
+
+    "allowed_root_folders": [
+      "src",
+      "public",
+      "node_modules",
+      "aidcs",
+      "config",
+      "registry",
+      "Reference"
+    ],
+
+    "required_files": [
+      "index.json",
+      "aidcs.config.json"
+    ],
+
+    "folder_structure": {
+      "root": "project_root",
+      "folders": [
+        {
+          "path": "config",
+          "purpose": "runtime configuration",
+          "search_priority": "highest"
+        },
+        {
+          "path": "config/agents",
+          "purpose": "agent definitions, intents, actions",
+          "search_priority": "highest"
+        },
+        {
+          "path": "config/voice",
+          "purpose": "voice pipeline configuration",
+          "search_priority": "high"
+        },
+        {
+          "path": "config/llm",
+          "purpose": "llm gateway and routing",
+          "search_priority": "high"
+        },
+        {
+          "path": "aidcs",
+          "purpose": "core ai control layer",
+          "search_priority": "high"
+        },
+        {
+          "path": "aidcs/config",
+          "purpose": "aidcs loader and schema config",
+          "search_priority": "highest"
+        },
+        {
+          "path": "aidcs/bootstrap",
+          "purpose": "bootstrap and runtime initialization",
+          "search_priority": "high"
+        },
+        {
+          "path": "aidcs/dom",
+          "purpose": "dom scan and registry",
+          "search_priority": "high"
+        },
+        {
+          "path": "aidcs/context",
+          "purpose": "ai context assembly",
+          "search_priority": "medium"
+        },
+        {
+          "path": "aidcs/actions",
+          "purpose": "action execution engine",
+          "search_priority": "high"
+        },
+        {
+          "path": "aidcs/agents",
+          "purpose": "agent runtime implementations",
+          "search_priority": "high"
+        },
+        {
+          "path": "aidcs/llm",
+          "purpose": "llm routing and response handling",
+          "search_priority": "medium"
+        },
+        {
+          "path": "aidcs/voice",
+          "purpose": "voice pipeline runtime",
+          "search_priority": "medium"
+        },
+        {
+          "path": "aidcs/intent",
+          "purpose": "intent detection and resolution",
+          "search_priority": "medium"
+        },
+        {
+          "path": "aidcs/websocket",
+          "purpose": "socket transport",
+          "search_priority": "low"
+        },
+        {
+          "path": "aidcs/memory",
+          "purpose": "memory subsystem",
+          "search_priority": "low"
+        },
+        {
+          "path": "aidcs/ui",
+          "purpose": "ui overlays and rendering",
+          "search_priority": "medium"
+        },
+        {
+          "path": "aidcs/schemas",
+          "purpose": "json schemas",
+          "search_priority": "medium"
+        },
+        {
+          "path": "registry",
+          "purpose": "dom registry snapshots",
+          "search_priority": "high"
+        },
+        {
+          "path": "src",
+          "purpose": "frontend integration",
+          "search_priority": "medium"
+        },
+        {
+          "path": "public",
+          "purpose": "static assets",
+          "search_priority": "low"
+        },
+        {
+          "path": "Reference",
+          "purpose": "reference config snapshots",
+          "search_priority": "low"
+        }
+      ],
+      "files": [
+        {
+          "path": "index.json",
+          "purpose": "master configuration",
+          "search_priority": "highest"
+        },
+        {
+          "path": "config/index.json",
+          "purpose": "runtime toggles",
+          "search_priority": "highest"
+        },
+        {
+          "path": "aidcs/index.json",
+          "purpose": "aidcs module index",
+          "search_priority": "highest"
+        }
+      ]
+    },
+
+    "search_optimization": {
+      "enabled": true,
+      "strategy": "path_weighted",
+      "priority_paths": [
+        "index.json",
+        "config/**",
+        "aidcs/config/**",
+        "aidcs/**",
+        "registry/**",
+        "src/**"
+      ],
+      "include_globs": [
+        "**/*.json",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.md"
+      ],
+      "exclude_globs": [
+        "**/node_modules/**",
+        "**/dist/**",
+        "**/build/**",
+        "**/.git/**",
+        "**/.cache/**",
+        "**/.next/**"
+      ]
+    }
+  },
+
+  "aidcs_architecture": {
+
+    "section_prefix": "AI-Sect",
+
+    "section_format": "AI-Sect-{index}-{short}",
+
+    "auto_reindex_sections": true,
+
+    "scan_dom_depth": 6,
+
+    "generate_dom_map": true,
+
+    "default_sections": [
+
+      {
+        "index": 1,
+        "name": "header",
+        "short": "HDR"
+      },
+
+      {
+        "index": 2,
+        "name": "navigation",
+        "short": "NAV"
+      },
+
+      {
+        "index": 3,
+        "name": "container",
+        "short": "CNT"
+      },
+
+      {
+        "index": 4,
+        "name": "display",
+        "short": "DSP"
+      },
+
+      {
+        "index": 5,
+        "name": "ai_panel",
+        "short": "AIC"
+      },
+
+      {
+        "index": 6,
+        "name": "footer",
+        "short": "FTR"
+      }
+
+    ]
+  },
+
+  "dom_intelligence_layer": {
+
+    "enabled": true,
+
+    "dom_scan_method": "structured_scan",
+
+    "extractable_content_types": [
+      "text",
+      "tables",
+      "images",
+      "product_cards",
+      "forms"
+    ]
+  },
+
+  "ai_context_layer": {
+
+    "enabled": true,
+
+    "context_sources": [
+      "dom_content",
+      "metadata",
+      "page_title",
+      "section_labels"
+    ]
+  },
+
+  "intent_router": {
+
+    "enabled": true,
+
+    "routing_strategy": "section_intent_mapping",
+
+    "intent_priority": [
+      "navigation",
+      "content_display",
+      "ai_assistance",
+      "analytics"
+    ]
+  },
+
+  "agent_control_policy": {
+
+    "agents": [
+
+      {
+        "name": "navigation_agent",
+        "allowed_sections": [
+          "AI-Sect-2-NAV"
+        ]
+      },
+
+      {
+        "name": "content_agent",
+        "allowed_sections": [
+          "AI-Sect-3-CNT",
+          "AI-Sect-4-DSP"
+        ]
+      },
+
+      {
+        "name": "assistant_agent",
+        "allowed_sections": [
+          "AI-Sect-5-AIC"
+        ]
+      },
+
+      {
+        "name": "analytics_agent",
+        "allowed_sections": [
+          "AI-Sect-1-HDR",
+          "AI-Sect-6-FTR"
+        ]
+      },
+      {
+        "name": "ui_controller_agent",
+        "allowed_sections": [
+          "AI-Sect-3-CNT",
+          "AI-Sect-4-DSP",
+          "AI-Sect-5-AIC"
+        ]
+      },
+      {
+        "name": "supervisor_agent",
+        "allowed_sections": [
+          "AI-Sect-1-HDR",
+          "AI-Sect-2-NAV",
+          "AI-Sect-3-CNT",
+          "AI-Sect-4-DSP",
+          "AI-Sect-5-AIC",
+          "AI-Sect-6-FTR"
+        ]
+      }
+
+    ]
+  },
+
+  "dom_registry": {
+
+    "registry_file": "registry/.ai-dom-map.json",
+
+    "auto_generate": true,
+
+    "required_fields": [
+      "id",
+      "section_name",
+      "dom_path",
+      "content_type"
+    ]
+  },
+
+  "development_tools": {
+
+    "overlay_display": true,
+
+    "section_label_visibility": true,
+
+    "overlay_style": {
+      "font_size": "10px",
+      "opacity": 0.7
+    },
+
+    "toggle_shortcut": "ALT+A"
+  },
+
+  "build_optimization": {
+
+    "remove_dev_overlay": true,
+
+    "remove_debug_logs": true,
+
+    "compress_dom_registry": true,
+
+    "preserve_section_ids": true
+  },
+
+  "validation_pipeline": [
+
+    "structure_validation",
+    "section_validation",
+    "dom_registry_validation",
+    "agent_permission_validation",
+    "build_validation"
+
+  ],
+
+  "runtime_execution_flow": [
+
+    "load_index_config",
+    "validate_index_schema",
+    "scan_dom",
+    "apply_section_ids",
+    "generate_dom_registry",
+    "build_ai_context",
+    "detect_user_intent",
+    "execute_agent_action"
+
+  ],
+
+  "safety_rules": {
+
+    "forbidden_ai_actions": [
+
+      "delete_dom_sections",
+      "modify_framework_core",
+      "rewrite_backend_requests"
+
+    ],
+
+    "allowed_ai_actions": [
+
+      "read_dom_sections",
+      "update_display_sections",
+      "inject_ai_components"
+
+    ]
+  },
+
+  "confidence_thresholds": {
+
+    "minimum_ai_confidence": 0.90,
+
+    "auto_execute_threshold": 0.98,
+
+    "require_human_review_below": 0.90
+  }
+}

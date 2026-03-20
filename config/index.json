@@ -1,0 +1,77 @@
+{
+  "runtime_mode": "development",
+
+  "dom_scanner": {
+    "scan_depth": 6,
+    "auto_reindex_sections": true
+  },
+
+  "development_overlay": {
+    "enabled": true,
+    "toggle_key": "ALT+A",
+    "font_size": "10px",
+    "opacity": 0.7
+  },
+
+  "dom_registry": {
+    "generate_file": "registry/.ai-dom-map.json",
+    "auto_generate": true
+  },
+
+  "kernel": {
+    "enabled": true,
+    "batch_size": 5,
+    "throttle_ms": 16,
+    "memory_limit": 5000,
+    "max_batches": 20,
+    "coalesce_sections": true,
+    "adaptive_throttle": {
+      "min_ms": 8,
+      "max_ms": 50,
+      "step_ms": 8
+    }
+  },
+
+  "performance_guard": {
+    "error_threshold": 5,
+    "disable_actions_on_trip": true,
+    "disable_overlay_on_trip": true
+  },
+
+  "voice": {
+    "enabled": false,
+    "auto_start": false,
+    "sample_ms": 1500,
+    "stt_endpoint": "",
+    "language": "en"
+  },
+
+  "agents": {
+    "navigation_agent": {
+      "sections": ["AI-Sect-2-NAV"]
+    },
+
+    "content_agent": {
+      "sections": [
+        "AI-Sect-3-CNT",
+        "AI-Sect-4-DSP"
+      ]
+    },
+
+    "assistant_agent": {
+      "sections": ["AI-Sect-5-AIC"]
+    },
+
+    "analytics_agent": {
+      "sections": ["AI-Sect-1-HDR", "AI-Sect-6-FTR"]
+    },
+
+    "ui_controller_agent": {
+      "sections": [
+        "AI-Sect-3-CNT",
+        "AI-Sect-4-DSP",
+        "AI-Sect-5-AIC"
+      ]
+    }
+  }
+}

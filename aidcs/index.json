@@ -1,0 +1,176 @@
+{
+  "schema_version": "1.0",
+
+  "module_identity": {
+    "name": "AIDCS",
+    "full_name": "AI Display Control System",
+    "version": "2.0",
+    "type": "frontend_ai_control_layer"
+  },
+
+  "architecture_layers": [
+
+    {
+      "layer": "core",
+      "description": "base system responsible for loading configuration and initializing AIDCS",
+
+      "modules": [
+        "load_index_config",
+        "config_merger",
+        "structure_validator"
+      ]
+    },
+
+    {
+      "layer": "dom_control",
+      "description": "DOM structure scanner and section controller",
+
+      "modules": [
+        "dom_scanner",
+        "section_manager",
+        "dom_registry_builder"
+      ]
+    },
+
+    {
+      "layer": "dom_intelligence",
+      "description": "analyzes DOM and extracts structured content",
+
+      "modules": [
+        "dom_tree_builder",
+        "content_extractor",
+        "section_classifier"
+      ]
+    },
+
+    {
+      "layer": "ai_context",
+      "description": "builds context for AI agents from page content",
+
+      "modules": [
+        "context_builder",
+        "page_context_assembler",
+        "metadata_extractor"
+      ]
+    },
+
+    {
+      "layer": "intent_router",
+      "description": "routes user intent to target sections",
+
+      "modules": [
+        "intent_detector",
+        "intent_classifier",
+        "action_resolver"
+      ]
+    },
+
+    {
+      "layer": "agent_control",
+      "description": "manages multi-agent coordination",
+
+      "modules": [
+        "navigation_agent",
+        "content_agent",
+        "assistant_agent",
+        "analytics_agent",
+        "ui_controller_agent",
+        "supervisor_agent"
+      ]
+    },
+
+    {
+      "layer": "action_engine",
+      "description": "executes UI updates and AI responses",
+
+      "modules": [
+        "action_engine",
+        "ui_updater",
+        "component_injector",
+        "safe_dom_modifier"
+      ]
+    }
+
+  ],
+
+  "section_system": {
+
+    "section_prefix": "AI-Sect",
+
+    "section_format": "AI-Sect-{index}-{short}",
+
+    "default_sections": [
+
+      { "index": 1, "name": "header", "short": "HDR" },
+
+      { "index": 2, "name": "navigation", "short": "NAV" },
+
+      { "index": 3, "name": "container", "short": "CNT" },
+
+      { "index": 4, "name": "display", "short": "DSP" },
+
+      { "index": 5, "name": "ai_panel", "short": "AIC" },
+
+      { "index": 6, "name": "footer", "short": "FTR" }
+
+    ],
+
+    "auto_reindex": true
+  },
+
+  "dom_registry": {
+
+    "registry_file": "registry/.ai-dom-map.json",
+
+    "required_fields": [
+      "id",
+      "section_name",
+      "dom_path",
+      "content_type"
+    ],
+
+    "auto_generate": true
+  },
+
+  "development_overlay": {
+
+    "enabled": true,
+
+    "display_section_labels": true,
+
+    "toggle_shortcut": "ALT+A",
+
+    "overlay_style": {
+      "font_size": "10px",
+      "opacity": 0.7
+    }
+  },
+
+  "execution_pipeline": [
+
+    "load_index_config",
+    "validate_schema",
+    "scan_dom",
+    "apply_section_ids",
+    "generate_dom_registry",
+    "build_context",
+    "detect_intent",
+    "execute_agent_action"
+
+  ],
+
+  "safety_rules": {
+
+    "allowed_actions": [
+      "read_dom_sections",
+      "update_display_sections",
+      "inject_ai_components"
+    ],
+
+    "forbidden_actions": [
+      "delete_dom_sections",
+      "modify_framework_core",
+      "rewrite_backend_requests"
+    ]
+  }
+}

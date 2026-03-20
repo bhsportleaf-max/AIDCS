@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "description": "AIDCS root configuration placeholder",
+  "config_paths": [
+    "index.json",
+    "config/index.json",
+    "aidcs/index.json"
+  ]
+}

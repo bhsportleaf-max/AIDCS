@@ -1,0 +1,81 @@
+{
+  "intent_mappings": [
+    {
+      "intent": "navigate_home",
+      "keywords": ["home", "main page", "dashboard", "start", "go back"],
+      "agent": "navigation_agent",
+      "action": "trigger_route_change",
+      "section": "AI-Sect-2-NAV"
+    },
+    {
+      "intent": "navigate_dashboard",
+      "keywords": ["dashboard", "overview", "reports"],
+      "agent": "navigation_agent",
+      "action": "trigger_route_change",
+      "section": "AI-Sect-2-NAV"
+    },
+    {
+      "intent": "navigate_payments",
+      "keywords": ["payment", "billing", "card", "invoice", "plan"],
+      "agent": "navigation_agent",
+      "action": "trigger_route_change",
+      "section": "AI-Sect-2-NAV"
+    },
+    {
+      "intent": "navigate_settings",
+      "keywords": ["settings", "profile", "account", "preferences"],
+      "agent": "navigation_agent",
+      "action": "trigger_route_change",
+      "section": "AI-Sect-2-NAV"
+    },
+    {
+      "intent": "navigate_support",
+      "keywords": ["support", "help", "ticket", "contact", "faq"],
+      "agent": "navigation_agent",
+      "action": "trigger_route_change",
+      "section": "AI-Sect-2-NAV"
+    },
+    {
+      "intent": "summarize_page",
+      "keywords": ["summarize", "explain page", "tl;dr", "brief", "what is this page"],
+      "agent": "content_agent",
+      "action": "generate_summary",
+      "section": "AI-Sect-4-DSP"
+    },
+    {
+      "intent": "assist_user",
+      "keywords": ["help", "guide", "support", "question", "ask"],
+      "agent": "assistant_agent",
+      "action": "display_chat_message",
+      "section": "AI-Sect-5-AIC"
+    },
+    {
+      "intent": "read_section",
+      "keywords": ["read", "inspect", "show content", "extract text"],
+      "agent": "content_agent",
+      "action": "read_section_content",
+      "section": "AI-Sect-4-DSP"
+    },
+    {
+      "intent": "update_display",
+      "keywords": ["update view", "refresh content", "replace content", "update display"],
+      "agent": "content_agent",
+      "action": "update_display_section",
+      "section": "AI-Sect-4-DSP"
+    },
+    {
+      "intent": "inject_component",
+      "keywords": ["insert widget", "add component", "embed card"],
+      "agent": "content_agent",
+      "action": "inject_ui_component",
+      "section": "AI-Sect-4-DSP"
+    },
+    {
+      "intent": "log_navigation",
+      "keywords": ["track click", "log visit", "record navigation"],
+      "agent": "analytics_agent",
+      "action": "record_navigation_event",
+      "section": "AI-Sect-6-FTR"
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "schema_version": "1.1",
+
+  "supervisor_system": {
+    "enabled": true,
+    "mode": "central_orchestrator",
+    "description": "coordinates all AI agents and enforces execution rules"
+  },
+
+  "supervisor_identity": {
+    "name": "supervisor_agent",
+    "access_level": "root",
+    "override_permissions": true
+  },
+
+  "agent_orchestration": {
+    "execution_strategy": "priority_based",
+    "max_active_agents": 4,
+    "agent_priority_order": [
+      "supervisor_agent",
+      "assistant_agent",
+      "navigation_agent",
+      "content_agent",
+      "ui_controller_agent",
+      "analytics_agent"
+    ],
+    "parallel_execution": true,
+    "max_agent_runtime_ms": 200
+  },
+
+  "decision_rules": {
+    "require_intent_mapping": true,
+    "validate_agent_capabilities": true,
+    "validate_action_permissions": true,
+    "validate_section_access": true,
+    "reject_unknown_actions": true
+  },
+
+  "conflict_resolution": {
+    "strategy": "priority_override",
+    "rules": [
+      {
+        "condition": "multiple_agents_same_section",
+        "resolution": "highest_priority_agent"
+      },
+      {
+        "condition": "conflicting_actions",
+        "resolution": "supervisor_decision"
+      },
+      {
+        "condition": "low_confidence_action",
+        "resolution": "block_execution"
+      }
+    ]
+  },
+
+  "confidence_control": {
+    "minimum_confidence": 0.90,
+    "auto_execute_threshold": 0.98,
+    "require_user_confirmation_below": 0.90
+  },
+
+  "resource_limits": {
+    "max_actions_per_cycle": 20,
+    "max_agents_per_request": 4,
+    "max_execution_depth": 5
+  },
+
+  "monitoring": {
+    "enable_execution_logging": true,
+    "log_agent_decisions": true,
+    "log_conflict_resolution": true
+  },
+
+  "safety_controls": {
+    "forbidden_operations": [
+      "delete_dom_section",
+      "modify_framework_core",
+      "execute_arbitrary_script"
+    ],
+    "enforce_section_boundaries": true,
+    "halt_on_security_violation": true
+  },
+
+  "recovery_policy": {
+    "on_agent_failure": "retry_once",
+    "on_system_error": "fallback_to_assistant_agent",
+    "on_conflict_loop": "terminate_cycle"
+  },
+
+  "startup_orchestration": {
+    "trigger_event": "index_config_loaded",
+    "startup_pipeline": [
+      "check_microphone_permission",
+      "request_user_identity",
+      "initialize_local_memory",
+      "activate_content_manager"
+    ],
+    "ui_interactions": {
+      "microphone_permission": {
+        "type": "popup",
+        "message": "This AI assistant uses voice interaction. Allow microphone access?"
+      },
+      "user_identity": {
+        "type": "modal",
+        "title": "Welcome",
+        "prompt": "Enter your name to personalize your AI assistant",
+        "input_field": "user_name"
+      }
+    }
+  },
+
+  "local_memory": {
+    "enabled": true,
+    "storage_type": "localStorage",
+    "keys": {
+      "user_name": "aidcs_user_name",
+      "session_id": "aidcs_session_id",
+      "interaction_history": "aidcs_interaction_history",
+      "agent_state": "aidcs_agent_state"
+    },
+    "auto_initialize": true
+  },
+
+  "brain_connection_policy": {
+    "default_mode": "local_first",
+    "brain_alias": "LLM",
+    "rules": [
+      {
+        "condition": "local_context_available",
+        "action": "use_local_context"
+      },
+      {
+        "condition": "complex_query_detected",
+        "action": "connect_llm_brain"
+      },
+      {
+        "condition": "llm_unavailable",
+        "action": "fallback_local_response"
+      }
+    ]
+  },
+
+  "content_manager": {
+    "enabled": true,
+    "agent": "content_agent",
+    "personalization": {
+      "use_user_name": true,
+      "use_interaction_history": true
+    }
+  },
+
+  "execution_sequence": [
+    "load_index_config",
+    "initialize_supervisor",
+    "run_startup_pipeline",
+    "initialize_agents",
+    "start_ui_monitoring"
+  ]
+}
