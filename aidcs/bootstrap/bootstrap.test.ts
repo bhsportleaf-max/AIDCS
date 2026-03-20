@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { bootstrapAIDCS, BootstrapOptions } from "../aidcs/bootstrap/index";
+import { bootstrapAIDCS } from "./index";
 
 describe("bootstrapAIDCS", () => {
   it("should initialize without options", async () => {
