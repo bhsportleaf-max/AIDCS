@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0",
+  "comment": "Synthesized AIDCS Function Registry for Dashboard, AdminDashboard, and Login",
+  
+  "action_system": {
+    "enabled": true,
+    "strict_mode": true,
+    "reject_unknown_actions": true
+  },
+
+  "actions": [
+    {
+      "name": "login_user",
+      "description": "Submits user credentials to authenticate against the system",
+      "allowed_sections": [
+        "AI-Sect-1-LOGIN"
+      ],
+      "parameters": [
+        "email",
+        "password"
+      ],
+      "dom_operation": "trigger_form_submit"
+    },
+    {
+      "name": "navigate_to_route",
+      "description": "Triggers the router to change pages (e.g., to /dashboard or /admin)",
+      "allowed_sections": [
+        "AI-Sect-2-NAV",
+        "AI-Sect-ROOT"
+      ],
+      "parameters": [
+        "route_path"
+      ],
+      "dom_operation": "router_navigation"
+    },
+    {
+      "name": "toggle_theme",
+      "description": "Switch between light and dark mode",
+      "allowed_sections": [
+        "AI-Sect-1-HDR"
+      ],
+      "parameters": [
+        "theme"
+      ],
+      "dom_operation": "dispatch_event"
+    },
+    {
+      "name": "export_metrics_report",
+      "description": "Download or save the current dashboard metrics as a file",
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [
+        "format"
+      ],
+      "dom_operation": "trigger_download"
+    },
+    {
+      "name": "read_chart_data",
+      "description": "Extract data points from the main display chart",
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [],
+      "dom_operation": "read_dom"
+    },
+    {
+      "name": "view_user_details",
+      "description": "Open a modal or navigate to a specific user's details profile",
+      "allowed_sections": [
+        "AI-Sect-4-DSP",
+        "AI-Sect-3-CNT"
+      ],
+      "parameters": [
+        "user_id"
+      ],
+      "dom_operation": "trigger_click"
+    },
+    {
+      "name": "delete_user",
+      "description": "Remove a user from the system via the admin panel",
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [
+        "user_id"
+      ],
+      "dom_operation": "dispatch_action"
+    },
+    {
+      "name": "update_global_settings",
+      "description": "Save changes made in the admin settings panel",
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [
+        "setting_key",
+        "setting_value"
+      ],
+      "dom_operation": "form_submit"
+    },
+    {
+      "name": "read_system_logs",
+      "description": "Read the recent system exceptions or logs from the admin dashboard",
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [
+        "log_level"
+      ],
+      "dom_operation": "read_dom"
+    },
+    {
+      "name": "display_chat_message",
+      "description": "Show feedback or queries from the AI assistant",
+      "allowed_sections": [
+        "AI-Sect-5-AIC"
+      ],
+      "parameters": [
+        "message"
+      ],
+      "dom_operation": "append_element"
+    }
+  ]
+}

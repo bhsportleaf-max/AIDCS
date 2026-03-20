@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0",
+  "comment": "Synthesized AIDCS Rootmap for Dashboard, AdminDashboard, and Login",
+  
+  "pages": [
+    {
+      "page_id": "login_page",
+      "route": "/login",
+      "root": {
+        "id": "AI-Sect-ROOT",
+        "type": "body",
+        "children": [
+          {
+            "id": "AI-Sect-1-LOGIN",
+            "type": "auth_container",
+            "children": [
+              {
+                "id": "AI-11-FORM",
+                "type": "form",
+                "dom_selector": "form#login-form",
+                "children": [
+                  { "id": "AI-111-EMAIL", "type": "input", "dom_selector": "input[name='email']" },
+                  { "id": "AI-112-PASS", "type": "input", "dom_selector": "input[name='password']" },
+                  { "id": "AI-113-SUBMIT", "type": "button", "dom_selector": "button[type='submit']" }
+                ]
+              },
+              {
+                "id": "AI-12-ERR",
+                "type": "alert",
+                "dom_selector": ".error-message"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "page_id": "dashboard_page",
+      "route": "/dashboard",
+      "root": {
+        "id": "AI-Sect-ROOT",
+        "type": "body",
+        "children": [
+          {
+            "id": "AI-Sect-1-HDR",
+            "type": "header",
+            "children": [
+              { "id": "AI-11-LOGO", "type": "logo", "dom_selector": ".brand-logo" },
+              { "id": "AI-12-PROFILE", "type": "user_profile", "dom_selector": "#user-profile-menu" },
+              { "id": "AI-13-THEME", "type": "theme_toggle", "dom_selector": "#theme-toggle-btn" }
+            ]
+          },
+          {
+            "id": "AI-Sect-2-NAV",
+            "type": "navigation",
+            "dom_selector": "nav.sidebar"
+          },
+          {
+            "id": "AI-Sect-4-DSP",
+            "type": "main_display",
+            "children": [
+              {
+                "id": "AI-41-METRICS",
+                "type": "metrics_grid",
+                "children": [
+                  { "id": "AI-411-CARD1", "type": "metric_card", "dom_selector": "#metric-revenue" },
+                  { "id": "AI-412-CARD2", "type": "metric_card", "dom_selector": "#metric-users" }
+                ]
+              },
+              {
+                "id": "AI-42-CHART",
+                "type": "chart_container",
+                "dom_selector": "#main-chart-canvas"
+              },
+              {
+                "id": "AI-43-TABLE",
+                "type": "data_table",
+                "dom_selector": "#recent-activity-table"
+              }
+            ]
+          },
+          {
+            "id": "AI-Sect-5-AIC",
+            "type": "ai_panel",
+            "dom_selector": "#aidcs-orb-container"
+          }
+        ]
+      }
+    },
+    {
+      "page_id": "admin_page",
+      "route": "/admin",
+      "root": {
+        "id": "AI-Sect-ROOT",
+        "type": "body",
+        "children": [
+          {
+            "id": "AI-Sect-1-HDR",
+            "type": "header",
+            "children": [
+              { "id": "AI-11-BREADCRUMBS", "type": "breadcrumbs", "dom_selector": ".admin-breadcrumbs" }
+            ]
+          },
+          {
+            "id": "AI-Sect-2-NAV",
+            "type": "navigation",
+            "dom_selector": "nav.admin-sidebar"
+          },
+          {
+            "id": "AI-Sect-4-DSP",
+            "type": "main_display",
+            "children": [
+              {
+                "id": "AI-41-USER_MGMT",
+                "type": "user_table",
+                "dom_selector": "#admin-users-table"
+              },
+              {
+                "id": "AI-42-SYS_LOGS",
+                "type": "system_logs",
+                "dom_selector": "#admin-system-logs"
+              },
+              {
+                "id": "AI-43-SETTINGS",
+                "type": "settings_panel",
+                "dom_selector": "#admin-global-settings"
+              }
+            ]
+          },
+          {
+            "id": "AI-Sect-5-AIC",
+            "type": "ai_panel",
+            "dom_selector": "#aidcs-orb-container"
+          }
+        ]
+      }
+    }
+  ]
+}
