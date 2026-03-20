@@ -14,7 +14,8 @@
     "navigation_control": [
       "read_navigation",
       "highlight_navigation",
-      "trigger_route_change"
+      "trigger_route_change",
+      "navigate_via_content_summary"
     ],
 
     "content_analysis": [
@@ -39,7 +40,8 @@
     "system_control": [
       "scan_dom_structure",
       "read_dom_registry",
-      "update_section_metadata"
+      "update_section_metadata",
+      "report_system_error"
     ]
 
   },

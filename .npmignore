@@ -1,0 +1,28 @@
+# Exclude source code
+src/
+
+# Exclude testing and config files
+tests/
+__tests__/
+vitest.config.ts
+tsconfig.json
+.eslintrc.json
+.prettierrc.json
+.env.example
+
+# Exclude local AIDCS data & temp files
+config/
+registry/
+User/
+Reference/
+docs/
+public/
+OPTIMIZATIONS.md
+!DOCTYPE html.txt
+aidcs.config.json
+index.json
+
+# Always excluded automatically, but good practice to explicitly state
+.git/
+.github/
+node_modules/

@@ -1,8 +1,20 @@
 {
   "name": "aidcs",
   "version": "1.0.0",
-  "private": true,
+  "description": "Zero-dependency Multi-Agent DOM Orchestrator for mapping websites to AI ecosystems natively.",
   "type": "module",
+  "keywords": [
+    "ai",
+    "dom",
+    "orchestrator",
+    "llm",
+    "multi-agent",
+    "websocket",
+    "tts",
+    "netzach"
+  ],
+  "author": "",
+  "license": "MIT",
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "eslint . --ext .ts,.tsx",
@@ -17,6 +29,9 @@
   },
   "main": "dist/aidcs/index.js",
   "types": "dist/aidcs/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@types/node": "^20.11.30",
     "@typescript-eslint/eslint-plugin": "^7.18.0",

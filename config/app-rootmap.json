@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "comment": "Synthesized AIDCS Rootmap for Dashboard, AdminDashboard, and Login",
+  "comment": "Complete granular AIDCS Rootmap covering every interactive element on Dashboard, AdminDashboard, and Login",
   
   "pages": [
     {
@@ -19,15 +19,38 @@
                 "type": "form",
                 "dom_selector": "form#login-form",
                 "children": [
-                  { "id": "AI-111-EMAIL", "type": "input", "dom_selector": "input[name='email']" },
-                  { "id": "AI-112-PASS", "type": "input", "dom_selector": "input[name='password']" },
-                  { "id": "AI-113-SUBMIT", "type": "button", "dom_selector": "button[type='submit']" }
+                  { "id": "AI-111-EMAIL_GROUP", "type": "form_group", "children": [
+                      { "id": "AI-1111-EMAIL_LBL", "type": "label", "dom_selector": "label[for='email']" },
+                      { "id": "AI-1112-EMAIL_INP", "type": "input", "dom_selector": "input#email" }
+                  ]},
+                  { "id": "AI-112-PASS_GROUP", "type": "form_group", "children": [
+                      { "id": "AI-1121-PASS_LBL", "type": "label", "dom_selector": "label[for='password']" },
+                      { "id": "AI-1122-PASS_INP", "type": "input", "dom_selector": "input#password" }
+                  ]},
+                  { "id": "AI-113-OPTIONS", "type": "form_options", "children": [
+                      { "id": "AI-1131-REMEMBER", "type": "checkbox", "dom_selector": "input#remember-me" },
+                      { "id": "AI-1132-FORGOT", "type": "link", "dom_selector": "a.forgot-password-link" }
+                  ]},
+                  { "id": "AI-114-SUBMIT", "type": "button", "dom_selector": "button#submit-login" }
                 ]
               },
               {
-                "id": "AI-12-ERR",
+                "id": "AI-12-SSO",
+                "type": "sso_container",
+                "children": [
+                  { "id": "AI-121-BTN_GOOGLE", "type": "button", "dom_selector": "button.sso-google" },
+                  { "id": "AI-122-BTN_GITHUB", "type": "button", "dom_selector": "button.sso-github" }
+                ]
+              },
+              {
+                "id": "AI-13-REGISTER",
+                "type": "register_link",
+                "dom_selector": "a.register-account"
+              },
+              {
+                "id": "AI-14-ERR",
                 "type": "alert",
-                "dom_selector": ".error-message"
+                "dom_selector": "div.error-message-banner"
               }
             ]
           }
@@ -46,14 +69,25 @@
             "type": "header",
             "children": [
               { "id": "AI-11-LOGO", "type": "logo", "dom_selector": ".brand-logo" },
-              { "id": "AI-12-PROFILE", "type": "user_profile", "dom_selector": "#user-profile-menu" },
-              { "id": "AI-13-THEME", "type": "theme_toggle", "dom_selector": "#theme-toggle-btn" }
+              { "id": "AI-12-SEARCH", "type": "search_bar", "dom_selector": "input#global-search" },
+              { "id": "AI-13-BADE_NOTIF", "type": "button", "dom_selector": "button.notifications" },
+              { "id": "AI-14-PROFILE_MENU", "type": "dropdown", "dom_selector": "#user-profile-menu", "children": [
+                { "id": "AI-141-VIEW_PROFILE", "type": "menu_item", "dom_selector": "a.view-profile" },
+                { "id": "AI-142-SETTINGS", "type": "menu_item", "dom_selector": "a.user-settings" },
+                { "id": "AI-143-LOGOUT", "type": "menu_item", "dom_selector": "a.logout" }
+              ]},
+              { "id": "AI-15-THEME", "type": "theme_toggle", "dom_selector": "#theme-toggle-btn" }
             ]
           },
           {
             "id": "AI-Sect-2-NAV",
             "type": "navigation",
-            "dom_selector": "nav.sidebar"
+            "dom_selector": "nav.sidebar",
+            "children": [
+              { "id": "AI-21-LINK_HOME", "type": "nav_link", "dom_selector": "a[href='/dashboard']" },
+              { "id": "AI-22-LINK_ANALYTICS", "type": "nav_link", "dom_selector": "a[href='/dashboard/analytics']" },
+              { "id": "AI-23-LINK_REPORTS", "type": "nav_link", "dom_selector": "a[href='/dashboard/reports']" }
+            ]
           },
           {
             "id": "AI-Sect-4-DSP",
@@ -63,26 +97,48 @@
                 "id": "AI-41-METRICS",
                 "type": "metrics_grid",
                 "children": [
-                  { "id": "AI-411-CARD1", "type": "metric_card", "dom_selector": "#metric-revenue" },
-                  { "id": "AI-412-CARD2", "type": "metric_card", "dom_selector": "#metric-users" }
+                  { "id": "AI-411-CARD_REV", "type": "metric_card", "dom_selector": "#metric-revenue" },
+                  { "id": "AI-412-CARD_USR", "type": "metric_card", "dom_selector": "#metric-users" },
+                  { "id": "AI-413-CARD_ACT", "type": "metric_card", "dom_selector": "#metric-active" },
+                  { "id": "AI-414-CARD_BOUNCE", "type": "metric_card", "dom_selector": "#metric-bounce" }
                 ]
               },
               {
-                "id": "AI-42-CHART",
-                "type": "chart_container",
-                "dom_selector": "#main-chart-canvas"
+                "id": "AI-42-CHART_WIDGET",
+                "type": "chart_widget",
+                "children": [
+                  { "id": "AI-421-CHART_TITLE", "type": "heading", "dom_selector": ".chart-header h3" },
+                  { "id": "AI-422-CHART_TOGGLES", "type": "button_group", "children": [
+                    { "id": "AI-4221-TGL_1D", "type": "button", "dom_selector": "button[data-range='1d']" },
+                    { "id": "AI-4222-TGL_1W", "type": "button", "dom_selector": "button[data-range='1w']" },
+                    { "id": "AI-4223-TGL_1M", "type": "button", "dom_selector": "button[data-range='1m']" },
+                    { "id": "AI-4224-TGL_1Y", "type": "button", "dom_selector": "button[data-range='1y']" }
+                  ]},
+                  { "id": "AI-423-CHART_CANVAS", "type": "canvas", "dom_selector": "#main-chart-canvas" }
+                ]
               },
               {
-                "id": "AI-43-TABLE",
-                "type": "data_table",
-                "dom_selector": "#recent-activity-table"
+                "id": "AI-43-TABLE_WIDGET",
+                "type": "data_table_widget",
+                "children": [
+                  { "id": "AI-431-TBL_HEADER", "type": "header", "dom_selector": ".table-header" },
+                  { "id": "AI-432-TBL_BODY", "type": "tbody", "dom_selector": "#recent-activity-table tbody", "children": [
+                    { "id": "AI-4321-ROW_ANY", "type": "tr", "dom_selector": "tr.activity-row" },
+                    { "id": "AI-4322-BTN_VIEW_ANY", "type": "button", "dom_selector": "button.view-details" }
+                  ]}
+                ]
               }
             ]
           },
           {
             "id": "AI-Sect-5-AIC",
             "type": "ai_panel",
-            "dom_selector": "#aidcs-orb-container"
+            "dom_selector": "#aidcs-orb-container",
+            "children": [
+              { "id": "AI-51-CHAT_INP", "type": "input", "dom_selector": "input.ai-chat-input" },
+              { "id": "AI-52-VOICE_BTN", "type": "button", "dom_selector": "button.ai-mic-trigger" },
+              { "id": "AI-53-HIST_PANEL", "type": "scroll_area", "dom_selector": "div.ai-chat-history" }
+            ]
           }
         ]
       }
@@ -98,22 +154,57 @@
             "id": "AI-Sect-1-HDR",
             "type": "header",
             "children": [
-              { "id": "AI-11-BREADCRUMBS", "type": "breadcrumbs", "dom_selector": ".admin-breadcrumbs" }
+              { "id": "AI-11-BREADCRUMBS", "type": "breadcrumbs", "dom_selector": ".admin-breadcrumbs" },
+              { "id": "AI-12-GLOBAL_SEARCH", "type": "search_bar", "dom_selector": "input#admin-search" }
             ]
           },
           {
             "id": "AI-Sect-2-NAV",
             "type": "navigation",
-            "dom_selector": "nav.admin-sidebar"
+            "dom_selector": "nav.admin-sidebar",
+            "children": [
+              { "id": "AI-21-LNK_USERS", "type": "nav_link", "dom_selector": "a[href='/admin/users']" },
+              { "id": "AI-22-LNK_ROLES", "type": "nav_link", "dom_selector": "a[href='/admin/roles']" },
+              { "id": "AI-23-LNK_LOGS", "type": "nav_link", "dom_selector": "a[href='/admin/logs']" },
+              { "id": "AI-24-LNK_CONFIG", "type": "nav_link", "dom_selector": "a[href='/admin/config']" },
+              { "id": "AI-25-LNK_AGENTS", "type": "nav_link", "dom_selector": "a[href='/admin/agents']" }
+            ]
           },
           {
             "id": "AI-Sect-4-DSP",
             "type": "main_display",
             "children": [
               {
+                "id": "AI-44-AGENT_MGMT",
+                "type": "agent_management_section",
+                "children": [
+                  { "id": "AI-441-BTN_ADD_AGENT", "type": "button", "dom_selector": "button#add-new-agent" },
+                  { "id": "AI-442-AGENT_FORM", "type": "form", "dom_selector": "form#agent-api-form", "children": [
+                    { "id": "AI-4421-INP_NAME", "type": "input", "dom_selector": "input#agent-name" },
+                    { "id": "AI-4422-INP_API_KEY", "type": "input", "dom_selector": "input#agent-api-key" },
+                    { "id": "AI-4423-BTN_SUBMIT", "type": "button", "dom_selector": "button#submit-agent" }
+                  ]}
+                ]
+              },
+              {
                 "id": "AI-41-USER_MGMT",
-                "type": "user_table",
-                "dom_selector": "#admin-users-table"
+                "type": "user_table_section",
+                "children": [
+                  { "id": "AI-411-ACTION_BAR", "type": "toolbar", "children": [
+                    { "id": "AI-4111-BTN_ADD", "type": "button", "dom_selector": "button#add-new-user" },
+                    { "id": "AI-4112-BTN_FILTER", "type": "button", "dom_selector": "button#filter-users" },
+                    { "id": "AI-4113-BTN_EXPORT", "type": "button", "dom_selector": "button#export-users" }
+                  ]},
+                  { "id": "AI-412-USERS_TABLE", "type": "table", "dom_selector": "#admin-users-table", "children": [
+                    { "id": "AI-4121-ROW_ANY", "type": "tr", "dom_selector": "tr.user-row" },
+                    { "id": "AI-4122-BTN_EDIT_ANY", "type": "button", "dom_selector": "button.edit-user" },
+                    { "id": "AI-4123-BTN_DEL_ANY", "type": "button", "dom_selector": "button.delete-user" }
+                  ]},
+                  { "id": "AI-413-PAGINATION", "type": "pagination", "children": [
+                    { "id": "AI-4131-PREV", "type": "button", "dom_selector": "button.page-prev" },
+                    { "id": "AI-4132-NEXT", "type": "button", "dom_selector": "button.page-next" }
+                  ]}
+                ]
               },
               {
                 "id": "AI-42-SYS_LOGS",
@@ -123,7 +214,47 @@
               {
                 "id": "AI-43-SETTINGS",
                 "type": "settings_panel",
-                "dom_selector": "#admin-global-settings"
+                "dom_selector": "#admin-global-settings",
+                "children": [
+                  { "id": "AI-431-INPUT_API", "type": "input", "dom_selector": "input#api-key-config" },
+                  { "id": "AI-432-BTN_SAVE_CFG", "type": "button", "dom_selector": "button#save-global-settings" }
+                ]
+              },
+              {
+                "id": "AI-45-DB_PERMISSIONS",
+                "type": "database_settings",
+                "dom_selector": "#admin-db-connections",
+                "children": [
+                  { "id": "AI-451-TGL_DB_ALLOW", "type": "toggle", "dom_selector": "input#allow-db-sync" },
+                  { "id": "AI-452-TGL_EXT_ALLOW", "type": "toggle", "dom_selector": "input#allow-external-sync" },
+                  { "id": "AI-453-BTN_TEST_CONN", "type": "button", "dom_selector": "button#test-db-connection" }
+                ]
+              },
+              {
+                "id": "AI-46-NETZACH_HUB",
+                "type": "netzach_integration_panel",
+                "dom_selector": "#admin-netzach-hub",
+                "children": [
+                  { "id": "AI-461-FINETUNE_API", "type": "fine_tuning_dashboard", "dom_selector": "#netzach-finetune", "children": [
+                    { "id": "AI-4611-LST_AGENTS", "type": "list", "dom_selector": "ul.tunable-agents" },
+                    { "id": "AI-4612-BTN_SYNC", "type": "button", "dom_selector": "button.trigger-finetuning" }
+                  ]},
+                  { "id": "AI-462-PACKAGES_VIEW", "type": "subscription_packages", "dom_selector": "#netzach-packages", "children": [
+                    { "id": "AI-4621-CARD_BASIC", "type": "package_card", "dom_selector": ".pkg-basic" },
+                    { "id": "AI-4622-CARD_PRO", "type": "package_card", "dom_selector": ".pkg-pro" },
+                    { "id": "AI-4623-BTN_SUBSCRIBE", "type": "button", "dom_selector": "button.subscribe-agent" }
+                  ]},
+                  { "id": "AI-463-INTEGRATION_OAUTH", "type": "auth_panel", "dom_selector": "#netzach-auth-connect", "children": [
+                    { "id": "AI-4631-REGISTRATION_FORM", "type": "form", "dom_selector": "form#netzach-registration", "children": [
+                      { "id": "AI-46311-INP_EMAIL", "type": "input", "dom_selector": "input[name='user_email']" },
+                      { "id": "AI-46312-INP_NAME", "type": "input", "dom_selector": "input[name='user_name']" },
+                      { "id": "AI-46313-CHK_PRIVACY", "type": "checkbox", "dom_selector": "input#privacy-policy-agree" },
+                      { "id": "AI-46314-CHK_TOS", "type": "checkbox", "dom_selector": "input#tos-agree" },
+                      { "id": "AI-46315-BTN_REGISTER", "type": "button", "dom_selector": "button#submit-netzach-register" }
+                    ]},
+                    { "id": "AI-4632-BTN_CONNECT", "type": "button", "dom_selector": "button.connect-netzach" }
+                  ]}
+                ]
               }
             ]
           },
@@ -131,6 +262,51 @@
             "id": "AI-Sect-5-AIC",
             "type": "ai_panel",
             "dom_selector": "#aidcs-orb-container"
+          }
+        ]
+      }
+    },
+    {
+      "page_id": "aidcs_setup_page",
+      "route": "/aidcs",
+      "root": {
+        "id": "AI-Sect-ROOT",
+        "type": "body",
+        "children": [
+          {
+            "id": "AI-Sect-1-SETUP_WIZARD",
+            "type": "configuration_portal",
+            "dom_selector": "#aidcs-setup-container",
+            "children": [
+              {
+                "id": "AI-11-PERMISSIONS",
+                "type": "permission_toggles",
+                "children": [
+                  { "id": "AI-111-OPT_LOCAL_ONLY", "type": "radio", "dom_selector": "input#search-local-only" },
+                  { "id": "AI-112-OPT_EXT_LIMITED", "type": "radio", "dom_selector": "input#search-ext-limited" },
+                  { "id": "AI-113-OPT_EXT_FULL", "type": "radio", "dom_selector": "input#search-ext-full" }
+                ]
+              },
+              {
+                "id": "AI-12-FUNCTION_SELECT",
+                "type": "capability_matrix",
+                "dom_selector": "#agent-functions-grid",
+                "children": [
+                  { "id": "AI-121-TGL_ANY_FUNC", "type": "checkbox", "dom_selector": "input.toggle-function-feature" }
+                ]
+              },
+              {
+                "id": "AI-13-API_DASHBOARD",
+                "type": "usage_metrics_panel",
+                "dom_selector": "#api-integration-usage",
+                "children": [
+                  { "id": "AI-131-INP_API_KEY", "type": "input", "dom_selector": "input#setup-api-key" },
+                  { "id": "AI-132-CHART_USAGE", "type": "chart", "dom_selector": "canvas#token-usage-chart" },
+                  { "id": "AI-133-TXT_COST_EST", "type": "text", "dom_selector": "span.cost-estimation" }
+                ]
+              },
+              { "id": "AI-14-BTN_FINISH", "type": "button", "dom_selector": "button#finalize-setup" }
+            ]
           }
         ]
       }
