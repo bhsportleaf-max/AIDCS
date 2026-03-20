@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0",
+  "gateway": {
+    "default_provider": "local",
+    "timeout_ms": 2000
+  }
+}

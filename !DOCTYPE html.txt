@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIDCS 2.0 - AI Display Control System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6', // Teal
+                            600: '#0d9488',
+                            900: '#134e4a',
+                            950: '#042f2e',
+                        },
+                        slate: {
+                            850: '#151e2e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar for code blocks and main window */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .layer-btn.active {
+            border-left: 4px solid #0d9488;
+            background-color: #f0fdfa;
+            color: #0d9488;
+            font-weight: 600;
+        }
+
+        /* Chart Container Requirements strictly enforced */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 640px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+
+        /* Animation utilities */
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Chosen Palette: Slate/Zinc Base with Teal (Brand) Accents -->
+    <!-- Application Structure Plan: The SPA uses a dashboard-like exploratory structure. Because the source report describes a highly structured software architecture, reading it linearly is dry. Instead, the UI is divided into interactive thematic modules: 
+    1. A high-level capabilities grid (to quickly grasp the "what").
+    2. An interactive architectural stack (to explore the "how" layer-by-layer without being overwhelmed by technical details at once). 
+    3. A multi-agent orchestration visualization (to understand the delegation model).
+    4. Workflow timelines (to see the system in action over time). 
+    This allows users to drill down into the technical specifics only when they want to, keeping the cognitive load low while exploring complex system design. -->
+    <!-- Visualization & Content Choices: 
+    - Architecture Stack -> Goal: Organize/Hierarchical -> Method: Interactive HTML/CSS Flex Stack with dynamic detail panel. -> Justification: Better than static text; allows users to see the overall shape of the 6 layers and click to view responsibilities and code snippets contextually. NO SVG/Mermaid.
+    - Agent Permissions -> Goal: Relationships/Compare -> Method: Chart.js Doughnut/Bar & Interactive Grid -> Justification: Shows the distribution of access rights across different UI sections. Doughnut chart visualizes the concentration of permissions.
+    - Workflows -> Goal: Process -> Method: HTML Timeline nodes triggered by JS toggles -> Justification: Clearly delineates Developer vs. Runtime operations sequentially. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. HTML/CSS + Chart.js only. -->
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel shadow-sm border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl font-bold text-brand-600">⚡ AIDCS 2.0</span>
+                    <span class="hidden sm:inline-block px-2 py-1 text-xs font-semibold bg-slate-100 text-slate-600 rounded">Architecture Explorer</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                    <a href="#overview" class="hover:text-brand-600 transition-colors">Overview</a>
+                    <a href="#architecture" class="hover:text-brand-600 transition-colors">Layers</a>
+                    <a href="#agents" class="hover:text-brand-600 transition-colors">Agents</a>
+                    <a href="#workflows" class="hover:text-brand-600 transition-colors">Workflows</a>
+                    <a href="#kernel" class="hover:text-brand-600 transition-colors">The Future</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-24">
+
+        <!-- Header / Hero Section -->
+        <section id="overview" class="scroll-mt-24">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+                    AI Display Control System
+                </h1>
+                <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                    A structured AI operating system for UI. Moving beyond chatbot widgets to provide a universal, multi-layer AI control interface for any frontend project, operating safely within defined architecture.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Capability Cards -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div class="text-3xl mb-3">👁️</div>
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">AI-Readable DOM</h3>
+                    <p class="text-sm text-slate-600">Translates standard frontend structure into an optimized, machine-readable format.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div class="text-3xl mb-3">🛡️</div>
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">Safe UI Manipulation</h3>
+                    <p class="text-sm text-slate-600">Modifies targeted UI blocks without breaking core navigation, backend calls, or framework logic.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div class="text-3xl mb-3">🤖</div>
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">Multi-Agent Orchestration</h3>
+                    <p class="text-sm text-slate-600">Distributes UI control across specialized agents (Analytics, Marketing, Assistant, etc.).</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div class="text-3xl mb-3">🧩</div>
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">Context Extraction</h3>
+                    <p class="text-sm text-slate-600">Builds semantic meaning and contextual awareness from page content automatically.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture Stack Section -->
+        <section id="architecture" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-slate-900 mb-2">The Architecture Stack</h2>
+                <p class="text-slate-600 max-w-3xl">
+                    Explore the 6 independent layers that bridge the gap between a standard frontend project and autonomous AI control. Click on any layer to view its responsibilities, modules, and data structures.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                
+                <!-- Interactive Stack Diagram (Left) -->
+                <div class="lg:col-span-1 space-y-2 relative" id="layer-stack-container">
+                    <!-- Top Project node -->
+                    <div class="text-center p-3 mb-4 bg-slate-850 text-slate-300 rounded-lg font-mono text-sm shadow-inner">
+                        [ Any Frontend Project ]
+                        <div class="text-xl mt-2 text-brand-500">↓</div>
+                    </div>
+                    
+                    <!-- Stack buttons injected via JS -->
+                    <div id="stack-buttons" class="flex flex-col gap-2"></div>
+                </div>
+
+                <!-- Detail Panel (Right) -->
+                <div class="lg:col-span-2 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden min-h-[500px] flex flex-col">
+                    <div class="bg-slate-50 border-b border-slate-200 px-6 py-4 flex items-center justify-between">
+                        <h3 id="detail-title" class="text-xl font-bold text-slate-800">Select a Layer</h3>
+                        <span id="detail-package" class="px-3 py-1 bg-brand-100 text-brand-900 text-xs font-mono rounded-full hidden"></span>
+                    </div>
+                    
+                    <div id="detail-content" class="p-6 flex-grow flex items-center justify-center text-slate-400">
+                        <p>Click a layer on the left to explore its internals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Multi-Agent Section -->
+        <section id="agents" class="scroll-mt-24 bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <div class="mb-10 text-center max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-900 mb-2">Multi-Agent Control Layer</h2>
+                <p class="text-slate-600">
+                    Instead of a monolithic AI, AIDCS utilizes specialized agents governed by a strict Permission Model. 
+                    This ensures agents only modify UI sections relevant to their roles.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Left: Table/Grid of Agents -->
+                <div>
+                    <h4 class="text-lg font-semibold text-slate-800 mb-4 border-b pb-2">Agent Registry</h4>
+                    <div class="space-y-3" id="agent-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Right: Visualization -->
+                <div>
+                    <h4 class="text-lg font-semibold text-slate-800 mb-4 text-center">Section Access Distribution</h4>
+                    <!-- Chart Container strictly sized according to requirements -->
+                    <div class="chart-container">
+                        <canvas id="agentChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-slate-500 mt-4">Visualizing the number of UI sections accessible by each specialized agent.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workflows Section -->
+        <section id="workflows" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-slate-900 mb-2">System Workflows</h2>
+                <p class="text-slate-600 max-w-3xl">
+                    How AIDCS integrates into the development lifecycle and operates in real-time on the client side.
+                </p>
+            </div>
+
+            <!-- Toggle -->
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex bg-slate-200 rounded-lg p-1">
+                    <button onclick="switchWorkflow('dev')" id="btn-flow-dev" class="px-6 py-2 rounded-md text-sm font-semibold transition-colors bg-white shadow-sm text-brand-600">Development</button>
+                    <button onclick="switchWorkflow('runtime')" id="btn-flow-runtime" class="px-6 py-2 rounded-md text-sm font-semibold text-slate-600 transition-colors hover:text-slate-900">Runtime</button>
+                </div>
+            </div>
+
+            <!-- Workflow Visualizations -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8 min-h-[300px] flex flex-col justify-center">
+                
+                <!-- Dev Flow -->
+                <div id="flow-dev" class="fade-in">
+                    <h3 class="text-xl font-bold text-slate-800 mb-6 text-center">Developer Integration Pipeline</h3>
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4 relative">
+                        <!-- Connecting Line -->
+                        <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-brand-100 -z-10 -translate-y-1/2"></div>
+                        
+                        <!-- Steps -->
+                        <div class="flex flex-col items-center text-center bg-white p-2 z-10">
+                            <div class="w-12 h-12 bg-slate-850 text-white rounded-full flex items-center justify-center font-bold mb-3 shadow-lg">1</div>
+                            <code class="text-xs font-bold text-brand-600 bg-brand-50 px-2 py-1 rounded mb-1">npm install</code>
+                            <p class="text-sm text-slate-600 w-32">Install aidcs-core package</p>
+                        </div>
+                        <div class="flex flex-col items-center text-center bg-white p-2 z-10">
+                            <div class="w-12 h-12 bg-slate-850 text-white rounded-full flex items-center justify-center font-bold mb-3 shadow-lg">2</div>
+                            <code class="text-xs font-bold text-brand-600 bg-brand-50 px-2 py-1 rounded mb-1">npx aidcs init</code>
+                            <p class="text-sm text-slate-600 w-32">Initialize configuration</p>
+                        </div>
+                        <div class="flex flex-col items-center text-center bg-white p-2 z-10">
+                            <div class="w-12 h-12 bg-slate-850 text-white rounded-full flex items-center justify-center font-bold mb-3 shadow-lg">3</div>
+                            <code class="text-xs font-bold text-brand-600 bg-brand-50 px-2 py-1 rounded mb-1">npm run dev</code>
+                            <p class="text-sm text-slate-600 w-32">Start local server</p>
+                        </div>
+                        <div class="flex flex-col items-center text-center bg-white p-2 z-10">
+                            <div class="w-12 h-12 bg-brand-500 text-white rounded-full flex items-center justify-center font-bold mb-3 shadow-lg ring-4 ring-brand-100">4</div>
+                            <p class="font-semibold text-slate-800 mb-1">System Scans</p>
+                            <p class="text-sm text-slate-600 w-32">Sections assigned & Dev Overlay active</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Runtime Flow -->
+                <div id="flow-runtime" class="fade-in hidden">
+                    <h3 class="text-xl font-bold text-slate-800 mb-6 text-center">In-Browser Execution Loop</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 text-center">
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col justify-center relative">
+                            <span class="text-xl mb-1">📄</span>
+                            <span class="text-xs font-bold">Page Load</span>
+                        </div>
+                        <div class="p-3 bg-white border border-brand-200 shadow-sm rounded-lg flex flex-col justify-center">
+                            <span class="text-xl mb-1">🔍</span>
+                            <span class="text-xs font-bold">DOM Scanner</span>
+                        </div>
+                        <div class="p-3 bg-white border border-brand-200 shadow-sm rounded-lg flex flex-col justify-center">
+                            <span class="text-xl mb-1">🧠</span>
+                            <span class="text-xs font-bold">Intelligence</span>
+                        </div>
+                        <div class="p-3 bg-white border border-brand-200 shadow-sm rounded-lg flex flex-col justify-center">
+                            <span class="text-xl mb-1">📦</span>
+                            <span class="text-xs font-bold">Context</span>
+                        </div>
+                        <div class="p-3 bg-white border border-brand-200 shadow-sm rounded-lg flex flex-col justify-center">
+                            <span class="text-xl mb-1">🔀</span>
+                            <span class="text-xs font-bold">Intent Router</span>
+                        </div>
+                        <div class="p-3 bg-white border border-brand-200 shadow-sm rounded-lg flex flex-col justify-center">
+                            <span class="text-xl mb-1">🤖</span>
+                            <span class="text-xs font-bold">Agent Action</span>
+                        </div>
+                        <div class="p-3 bg-brand-50 border border-brand-500 shadow-md rounded-lg flex flex-col justify-center">
+                            <span class="text-xl mb-1">✨</span>
+                            <span class="text-xs font-bold text-brand-700">UI Update</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Kernel / Future Section -->
+        <section id="kernel" class="scroll-mt-24 relative overflow-hidden bg-slate-900 rounded-2xl shadow-xl text-white p-10 md:p-16">
+            <!-- Decorative background elements -->
+            <div class="absolute top-0 right-0 -mt-16 -mr-16 w-64 h-64 bg-brand-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+            <div class="absolute bottom-0 left-0 -mb-16 -ml-16 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+            
+            <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
+                <div class="flex-1">
+                    <h2 class="text-sm font-bold tracking-widest text-brand-400 uppercase mb-2">The Real Next Step</h2>
+                    <h3 class="text-4xl md:text-5xl font-extrabold mb-6">AIDCS Kernel</h3>
+                    <p class="text-slate-300 text-lg mb-6 leading-relaxed">
+                        To evolve from a "cool library" to serious platform architecture, the system requires a runtime engine turning the frontend into a minimal AI operating system.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-slate-200">
+                            <span class="text-brand-400 mr-3">✓</span> Controls & orchestrates agents dynamically
+                        </li>
+                        <li class="flex items-center text-slate-200">
+                            <span class="text-brand-400 mr-3">✓</span> Schedules async UI tasks
+                        </li>
+                        <li class="flex items-center text-slate-200">
+                            <span class="text-brand-400 mr-3">✓</span> Manages persistent AI memory state
+                        </li>
+                        <li class="flex items-center text-slate-200">
+                            <span class="text-brand-400 mr-3">✓</span> Optimizes response latency & rendering
+                        </li>
+                    </ul>
+                </div>
+                <div class="w-full md:w-1/3 flex justify-center">
+                    <div class="w-48 h-48 border-8 border-slate-800 rounded-full flex items-center justify-center relative animate-[spin_20s_linear_infinite]">
+                        <div class="absolute w-full h-full border-4 border-t-brand-500 border-r-transparent border-b-transparent border-l-transparent rounded-full opacity-50"></div>
+                        <div class="w-32 h-32 bg-slate-800 rounded-full flex items-center justify-center text-4xl shadow-[0_0_30px_rgba(20,184,166,0.3)] animate-[spin_10s_linear_reverse_infinite]">
+                            <span class="animate-none block -rotate-45">⚙️</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>AIDCS 2.0 - Structuring AI logic for modern web interfaces.</p>
+            <p class="mt-2 text-xs">Generated for Architecture Visualization.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // --- Data Definitions ---
+
+        const architectureLayers = [
+            {
+                id: 1,
+                name: "Layer 1: AIDCS Core",
+                tag: "aidcs-core",
+                desc: "The foundation. Handles section identification, scanning the project, and assigning AI-readable identifiers to DOM nodes.",
+                modules: ["domScanner", "sectionManager", "structureValidator", "overlayRenderer"],
+                example: null,
+                visual: `
+                    <div class="grid grid-cols-2 gap-4 text-sm mt-4">
+                        <div class="bg-slate-100 p-3 rounded border border-slate-200 text-center"><span class="font-bold text-slate-700">Scan</span><br><span class="text-xs">Finds &lt;header&gt;, &lt;nav&gt;</span></div>
+                        <div class="bg-brand-50 p-3 rounded border border-brand-200 text-center"><span class="font-bold text-brand-700">Assign</span><br><span class="text-xs">Adds ID: AI-Sect-1-HDR</span></div>
+                    </div>
+                `
+            },
+            {
+                id: 2,
+                name: "Layer 2: DOM Intelligence",
+                tag: "dom-intelligence",
+                desc: "Converts the raw DOM into a machine-readable semantic structure. Extracts content and classifies areas.",
+                modules: ["domTreeBuilder.js", "sectionClassifier.js", "contentExtractor.js", "domMapBuilder.js"],
+                example: {
+                    type: "json",
+                    title: "Example DOM Map Output",
+                    code: `{\n  "pageStructure": {\n    "header": "AI-Sect-1-HDR",\n    "navigation": "AI-Sect-2-NAV",\n    "content": "AI-Sect-3-CNT",\n    "display": "AI-Sect-4-DSP",\n    "aiPanel": "AI-Sect-5-AIC",\n    "footer": "AI-Sect-6-FTR"\n  }\n}`
+                },
+                visual: null
+            },
+            {
+                id: 3,
+                name: "Layer 3: AI Context Builder",
+                tag: "context",
+                desc: "Translates structural data and content into prompts/context that Large Language Models can natively understand.",
+                modules: ["contextBuilder.js", "contentSummarizer.js", "sectionContextBuilder.js", "pageContextAssembler.js"],
+                example: {
+                    type: "json",
+                    title: "AI-Ready Context Output",
+                    code: `{\n  "pageTitle": "Product Dashboard",\n  "sections": [\n    {\n      "id": "AI-Sect-4-DSP",\n      "contentType": "product-list",\n      "items": 12\n    }\n  ]\n}`
+                },
+                visual: null
+            },
+            {
+                id: 4,
+                name: "Layer 4: Intent Router",
+                tag: "intent-router",
+                desc: "Listens to user/AI intents and routes them to the correct UI section, preventing cross-contamination of logic.",
+                modules: ["intentDetector", "intentClassifier", "intentRouter", "actionResolver"],
+                example: {
+                    type: "flow",
+                    title: "Intent Flow Logic",
+                    code: `User: "show product details"\n      ↓\nIntent: "display content"\n      ↓\nTarget: "AI-Sect-4-DSP"\n      ↓\nExecute UI Action`
+                },
+                visual: null
+            },
+            {
+                id: 5,
+                name: "Layer 5: Multi-Agent Layer",
+                tag: "agents",
+                desc: "Runs multiple specialized agents instead of a single monolith. Each agent has specific permissions locked to UI sections.",
+                modules: ["navigationAgent", "contentAgent", "marketingAgent", "analyticsAgent", "assistantAgent", "uiControllerAgent"],
+                example: {
+                    type: "json",
+                    title: "Agent Permission Model",
+                    code: `{\n  "agents": {\n    "navigationAgent": ["AI-Sect-2-NAV"],\n    "contentAgent": ["AI-Sect-4-DSP"],\n    "assistantAgent": ["AI-Sect-5-AIC"],\n    "analyticsAgent": ["AI-Sect-1-HDR","AI-Sect-6-FTR"]\n  }\n}`
+                },
+                visual: null
+            },
+            {
+                id: 6,
+                name: "Layer 6: UI Action Engine",
+                tag: "action-engine",
+                desc: "The final execution layer. Applies visual updates, injects components, and modifies the DOM safely according to strict rules.",
+                modules: ["uiUpdater", "componentInjector", "safeDomModifier", "renderController"],
+                example: {
+                    type: "rules",
+                    title: "Safety Rules",
+                    code: `1. NEVER modify navigation logic\n2. NEVER change backend calls\n3. NEVER break framework structure`
+                },
+                visual: null
+            }
+        ];
+
+        const agentData = [
+            { name: "Navigation Agent", role: "manage routes", color: "bg-blue-100 text-blue-800 border-blue-200", sections: 1 },
+            { name: "Content Agent", role: "understand page content", color: "bg-green-100 text-green-800 border-green-200", sections: 1 },
+            { name: "Marketing Agent", role: "recommend products", color: "bg-purple-100 text-purple-800 border-purple-200", sections: 2 },
+            { name: "Analytics Agent", role: "track user behavior", color: "bg-orange-100 text-orange-800 border-orange-200", sections: 2 },
+            { name: "Assistant Agent", role: "chat interface", color: "bg-pink-100 text-pink-800 border-pink-200", sections: 1 },
+            { name: "UI Controller", role: "apply UI changes", color: "bg-brand-100 text-brand-800 border-brand-200", sections: 6 } // Master controller
+        ];
+
+        // --- Core Functions ---
+
+        function initArchitectureStack() {
+            const container = document.getElementById('stack-buttons');
+            container.innerHTML = '';
+            
+            architectureLayers.forEach((layer, index) => {
+                const btn = document.createElement('button');
+                btn.className = `layer-btn w-full text-left px-5 py-4 bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md hover:border-brand-300 transition-all flex items-center justify-between ${index === 0 ? 'active' : ''}`;
+                btn.onclick = () => selectLayer(layer.id, btn);
+                btn.innerHTML = `
+                    <span class="font-medium text-slate-800">${layer.name}</span>
+                    <span class="text-xs text-slate-400 font-mono">L${layer.id}</span>
+                `;
+                container.appendChild(btn);
+            });
+
+            // Select first layer by default
+            selectLayer(1, container.firstChild);
+        }
+
+        function selectLayer(id, btnElement) {
+            // Update UI Active State
+            document.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('active'));
+            if(btnElement) btnElement.classList.add('active');
+
+            // Find Data
+            const layer = architectureLayers.find(l => l.id === id);
+            if (!layer) return;
+
+            // Update Panel
+            document.getElementById('detail-title').textContent = layer.name;
+            const packageBadge = document.getElementById('detail-package');
+            packageBadge.textContent = layer.tag;
+            packageBadge.classList.remove('hidden');
+
+            let contentHTML = `
+                <div class="w-full fade-in h-full flex flex-col">
+                    <p class="text-slate-700 mb-6 text-lg">${layer.desc}</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow">
+                        <div>
+                            <h4 class="text-xs uppercase tracking-wider font-bold text-slate-500 mb-3">Key Modules</h4>
+                            <ul class="space-y-2">
+                                ${layer.modules.map(m => `
+                                    <li class="flex items-center text-sm font-mono text-slate-700 bg-slate-50 px-3 py-2 rounded border border-slate-100">
+                                        <span class="text-brand-500 mr-2 text-xs">📄</span> ${m}
+                                    </li>
+                                `).join('')}
+                            </ul>
+                            ${layer.visual || ''}
+                        </div>
+            `;
+
+            if (layer.example) {
+                let codeClass = layer.example.type === 'json' ? 'text-blue-400' : 'text-emerald-400';
+                contentHTML += `
+                        <div class="flex flex-col h-full">
+                            <h4 class="text-xs uppercase tracking-wider font-bold text-slate-500 mb-3">${layer.example.title}</h4>
+                            <div class="bg-slate-900 rounded-lg p-4 flex-grow overflow-auto shadow-inner border border-slate-800">
+                                <pre class="font-mono text-sm leading-relaxed ${codeClass}"><code>${layer.example.code}</code></pre>
+                            </div>
+                        </div>
+                `;
+            } else {
+                 contentHTML += `
+                        <div class="flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-300 p-6">
+                            <span class="text-slate-400 text-sm italic">Structural Core Layer</span>
+                        </div>
+                `;
+            }
+
+            contentHTML += `</div></div>`;
+            document.getElementById('detail-content').innerHTML = contentHTML;
+        }
+
+        function initAgentsList() {
+            const list = document.getElementById('agent-list');
+            agentData.forEach(agent => {
+                const div = document.createElement('div');
+                div.className = `flex justify-between items-center p-3 rounded-lg border ${agent.color}`;
+                div.innerHTML = `
+                    <div>
+                        <span class="font-bold text-sm block">${agent.name}</span>
+                        <span class="text-xs opacity-80">${agent.role}</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-bold text-lg leading-none">${agent.sections}</span>
+                        <span class="text-[10px] uppercase block opacity-80">Sections</span>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function initAgentChart() {
+            const ctx = document.getElementById('agentChart').getContext('2d');
+            
+            // Extract data for chart
+            const labels = agentData.map(a => a.name);
+            const data = agentData.map(a => a.sections);
+            const backgroundColors = [
+                'rgba(59, 130, 246, 0.7)',  // Blue
+                'rgba(16, 185, 129, 0.7)',  // Green
+                'rgba(168, 85, 247, 0.7)',  // Purple
+                'rgba(249, 115, 22, 0.7)',  // Orange
+                'rgba(236, 72, 153, 0.7)',  // Pink
+                'rgba(20, 184, 166, 0.7)'   // Brand (Teal)
+            ];
+            const borderColors = backgroundColors.map(c => c.replace('0.7', '1'));
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Accessible UI Sections',
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // CRITICAL: Allows CSS to control height
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Controls ${context.raw} Section${context.raw > 1 ? 's' : ''}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { stepSize: 1 },
+                            title: { display: true, text: 'Number of DOM Sections', color: '#64748b' }
+                        },
+                        x: {
+                            ticks: { 
+                                maxRotation: 45, 
+                                minRotation: 45,
+                                color: '#475569',
+                                // Label wrapping logic (16-char) implemented by truncating/formatting
+                                callback: function(value, index, values) {
+                                    let label = labels[index];
+                                    if(label.length > 16) return label.substr(0,14) + '..';
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function switchWorkflow(type) {
+            const devFlow = document.getElementById('flow-dev');
+            const runtimeFlow = document.getElementById('flow-runtime');
+            const btnDev = document.getElementById('btn-flow-dev');
+            const btnRuntime = document.getElementById('btn-flow-runtime');
+
+            if (type === 'dev') {
+                devFlow.classList.remove('hidden');
+                runtimeFlow.classList.add('hidden');
+                
+                btnDev.classList.add('bg-white', 'shadow-sm', 'text-brand-600');
+                btnDev.classList.remove('text-slate-600');
+                
+                btnRuntime.classList.remove('bg-white', 'shadow-sm', 'text-brand-600');
+                btnRuntime.classList.add('text-slate-600');
+            } else {
+                devFlow.classList.add('hidden');
+                runtimeFlow.classList.remove('hidden');
+                
+                btnRuntime.classList.add('bg-white', 'shadow-sm', 'text-brand-600');
+                btnRuntime.classList.remove('text-slate-600');
+                
+                btnDev.classList.remove('bg-white', 'shadow-sm', 'text-brand-600');
+                btnDev.classList.add('text-slate-600');
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initArchitectureStack();
+            initAgentsList();
+            initAgentChart();
+        });
+
+    </script>
+</body>
+</html>

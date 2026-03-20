@@ -1,0 +1,17 @@
+{
+  "name": "aidcs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "echo \"lint not configured\"",
+    "dev": "echo \"dev not configured\""
+  },
+  "main": "dist/aidcs/index.js",
+  "types": "dist/aidcs/index.d.ts",
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "typescript": "^5.5.4"
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "schema_version": "1.0",
+  "page_id": "home_page",
+
+  "root": {
+    "id": "AI-Sect-ROOT",
+    "type": "body",
+
+    "children": [
+
+      {
+        "id": "AI-Sect-1-HDR",
+        "type": "header",
+
+        "children": [
+
+          {
+            "id": "AI-Sect-12-NAV",
+            "type": "navigation",
+
+            "children": [
+
+              {
+                "id": "AI-121-LOGO",
+                "type": "logo",
+                "dom_selector": "#AI-121-LOGO"
+              },
+
+              {
+                "id": "AI-122-LINK",
+                "type": "nav_links",
+                "dom_selector": "#AI-122-LINK"
+              },
+
+              {
+                "id": "AI-123-LOGIN",
+                "type": "login_button",
+                "dom_selector": "#AI-123-LOGIN"
+              }
+
+            ]
+          }
+
+        ]
+      },
+
+      {
+        "id": "AI-Sect-2-SEC",
+        "type": "main_section",
+
+        "children": [
+
+          {
+            "id": "AI-21-CONT",
+            "type": "container",
+
+            "children": [
+
+              {
+                "id": "AI-22-ROW",
+                "type": "row",
+
+                "children": [
+
+                  {
+                    "id": "AI-221-COL",
+                    "type": "column"
+                  },
+
+                  {
+                    "id": "AI-222-COL",
+                    "type": "column"
+                  },
+
+                  {
+                    "id": "AI-223-COL",
+                    "type": "column"
+                  }
+
+                ]
+              }
+
+            ]
+          }
+
+        ]
+      },
+
+      {
+        "id": "AI-Sect-5-AIC",
+        "type": "ai_panel",
+
+        "children": [
+
+          {
+            "id": "AI-51-CHAT",
+            "type": "conversation_panel"
+          },
+
+          {
+            "id": "AI-52-VOICE",
+            "type": "voice_indicator"
+          }
+
+        ]
+      },
+
+      {
+        "id": "AI-Sect-6-FTR",
+        "type": "footer",
+
+        "children": [
+
+          {
+            "id": "AI-61-LINK",
+            "type": "footer_links"
+          },
+
+          {
+            "id": "AI-62-COPY",
+            "type": "copyright"
+          }
+
+        ]
+      }
+
+    ]
+  }
+}
