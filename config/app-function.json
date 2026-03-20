@@ -1,0 +1,281 @@
+{
+  "schema_version": "1.0",
+  "comment": "Synthesized AIDCS Function Registry for Dashboard, AdminDashboard, and Login",
+  
+  "action_system": {
+    "enabled": true,
+    "strict_mode": true,
+    "reject_unknown_actions": true
+  },
+
+  "actions": [
+    {
+      "name": "login_user",
+      "description": "Submits user credentials to authenticate against the system",
+      "allowed_sections": [
+        "AI-Sect-1-LOGIN"
+      ],
+      "parameters": [
+        "email",
+        "password"
+      ],
+      "dom_operation": "trigger_form_submit"
+    },
+    {
+      "name": "navigate_to_route",
+      "description": "Triggers the router to change pages (e.g., to /dashboard or /admin)",
+      "allowed_sections": [
+        "AI-Sect-2-NAV",
+        "AI-Sect-ROOT"
+      ],
+      "parameters": [
+        "route_path"
+      ],
+      "dom_operation": "router_navigation"
+    },
+    {
+      "name": "toggle_theme",
+      "description": "Switch between light and dark mode",
+      "allowed_sections": [
+        "AI-Sect-1-HDR"
+      ],
+      "parameters": [
+        "theme"
+      ],
+      "dom_operation": "dispatch_event"
+    },
+    {
+      "name": "export_metrics_report",
+      "description": "Download or save the current dashboard metrics as a file",
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [
+        "format"
+      ],
+      "dom_operation": "trigger_download"
+    },
+    {
+      "name": "read_chart_data",
+      "description": "Extract data points from the main display chart",
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [],
+      "dom_operation": "read_dom"
+    },
+    {
+      "name": "view_user_details",
+      "description": "Open a modal or navigate to a specific user's details profile",
+      "allowed_sections": [
+        "AI-Sect-4-DSP",
+        "AI-Sect-3-CNT"
+      ],
+      "parameters": [
+        "user_id"
+      ],
+      "dom_operation": "trigger_click"
+    },
+    {
+      "name": "delete_user",
+      "description": "Remove a user from the system via the admin panel",
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [
+        "user_id"
+      ],
+      "dom_operation": "dispatch_action"
+    },
+    {
+      "name": "update_global_settings",
+      "description": "Save changes made in the admin settings panel",
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [
+        "setting_key",
+        "setting_value"
+      ],
+      "dom_operation": "form_submit"
+    },
+    {
+      "name": "read_system_logs",
+      "description": "Read the recent system exceptions or logs from the admin dashboard",
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [
+        "log_level"
+      ],
+      "dom_operation": "read_dom"
+    },
+    {
+      "name": "display_chat_message",
+      "description": "Show feedback or queries from the AI assistant",
+      "allowed_sections": [
+        "AI-Sect-5-AIC"
+      ],
+      "parameters": [
+        "message"
+      ],
+      "dom_operation": "append_element"
+    },
+    {
+      "name": "initialize_api_credentials",
+      "description": "Checks the .env configuration for a default AI API key. If missing, it triggers a UI prompt to ask the user to provide an API key.",
+      "allowed_sections": [
+        "AI-Sect-ROOT",
+        "AI-Sect-5-AIC"
+      ],
+      "parameters": [],
+      "dom_operation": "conditional_prompt"
+    },
+    {
+      "name": "stream_tts_google_voice_ws",
+      "description": "Connects to a WebSocket for continuous, zero-latency Google Text-to-Speech (TTS) voice streaming tailored for the AI Assistant without the latency of standard REST APIs.",
+      "allowed_sections": [
+        "AI-Sect-5-AIC"
+      ],
+      "parameters": [
+        "websocket_endpoint",
+        "voice_settings"
+      ],
+      "dom_operation": "websocket_audio_stream"
+    },
+    {
+      "name": "sync_page_content_cache",
+      "description": "Scrapes the current webpage content (and approved external site data) and stores it locally as a page-wise JSON cache for instant offline retrieval.",
+      "allowed_sections": [
+        "AI-Sect-3-CNT",
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [
+        "page_url",
+        "cache_strategy"
+      ],
+      "dom_operation": "dom_to_json_cache"
+    },
+    {
+      "name": "grant_database_access",
+      "description": "Updates the system to allow the content manager to connect to the database or external APIs based on Admin toggle.",
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [
+        "allow_db",
+        "allow_external"
+      ],
+      "dom_operation": "dispatch_action"
+    },
+    {
+      "name": "navigate_via_content_summary",
+      "description": "Allows the Navigation Agent to read the page summary generated by the Content Agent and autonomously trigger a route change based on semantic context rather than explicit URLs.",
+      "allowed_sections": [
+        "AI-Sect-2-NAV",
+        "AI-Sect-ROOT"
+      ],
+      "parameters": [
+        "contextual_summary_intent",
+        "target_semantic_route"
+      ],
+      "dom_operation": "semantic_router_navigation"
+    },
+    {
+      "name": "connect_netzach_finetuning",
+      "description": "Pushes the current agent's interaction logs to the Netzach API for automated fine-tuning and model improvement.",
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [
+        "agent_id",
+        "dataset_timeline"
+      ],
+      "dom_operation": "api_request"
+    },
+    {
+      "name": "purchase_agent_subscription",
+      "description": "Triggers checkout. Upon successful subscription, gives return access by redirecting the user to https://aidcs.netzachs.com/{user_id}.",
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [
+        "package_tier",
+        "user_id"
+      ],
+      "dom_operation": "trigger_transaction_with_redirect"
+    },
+    {
+      "name": "sync_netzach_integration",
+      "description": "Authenticates and binds the local AIDCS instance securely to the overarching Netzach ecosystem against https://aidcs.netzachs.com/.",
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [
+        "auth_token"
+      ],
+      "dom_operation": "oauth_flow"
+    },
+    {
+      "name": "register_netzach_account",
+      "description": "Calls https://aidcs.netzachs.com/ to provision a new user account, securing privacy policy and terms of service acknowledgments before submission.",
+      "allowed_sections": [
+        "AI-Sect-4-DSP"
+      ],
+      "parameters": [
+        "user_email",
+        "user_name",
+        "accepts_privacy_policy",
+        "accepts_tos"
+      ],
+      "dom_operation": "form_submit"
+    },
+    {
+      "name": "save_aidcs_permissions",
+      "description": "Commits the global search bounds for the AI agents (e.g., Local Web Data Only vs. External Search).",
+      "allowed_sections": [
+        "AI-Sect-1-SETUP_WIZARD"
+      ],
+      "parameters": [
+        "search_boundary_level"
+      ],
+      "dom_operation": "form_submit"
+    },
+    {
+      "name": "toggle_agent_functions",
+      "description": "Globally enables or safely disables specific AI capabilities from the matrix during the initial setup.",
+      "allowed_sections": [
+        "AI-Sect-1-SETUP_WIZARD"
+      ],
+      "parameters": [
+        "function_name",
+        "is_enabled"
+      ],
+      "dom_operation": "dispatch_action"
+    },
+    {
+      "name": "fetch_api_usage_metrics",
+      "description": "Retrieves real-time token usage and cost estimation statistics specifically for the integration dashboard.",
+      "allowed_sections": [
+        "AI-Sect-1-SETUP_WIZARD"
+      ],
+      "parameters": [
+        "timeframe"
+      ],
+      "dom_operation": "api_request"
+    },
+    {
+      "name": "report_system_error",
+      "description": "Allows any operating AI agent or the main frontend website to safely report execution errors or API failures directly to Netzach via https://aidcs.netzachs.com/error/{user_id}.",
+      "allowed_sections": [
+        "AI-Sect-ROOT"
+      ],
+      "parameters": [
+        "user_id",
+        "error_payload",
+        "severity"
+      ],
+      "dom_operation": "api_request_netzach_error"
+    }
+  ]
+}
