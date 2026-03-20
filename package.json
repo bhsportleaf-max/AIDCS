@@ -5,13 +5,30 @@
   "type": "module",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "lint": "echo \"lint not configured\"",
-    "dev": "echo \"dev not configured\""
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "type-check": "tsc --noEmit",
+    "precommit": "npm run lint:fix && npm run format && npm run type-check && npm run test"
   },
   "main": "dist/aidcs/index.js",
   "types": "dist/aidcs/index.d.ts",
   "devDependencies": {
     "@types/node": "^20.11.30",
-    "typescript": "^5.5.4"
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "@vitest/ui": "^1.0.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.29.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.5.4",
+    "vitest": "^1.0.0",
+    "@vitest/coverage-v8": "^1.0.0",
+    "jsdom": "^22.1.0"
   }
 }

@@ -1,6 +1,8 @@
 import { bootstrapAIDCS, BootstrapOptions } from "../aidcs/bootstrap";
 
 export interface IntegrationOptions extends BootstrapOptions {
+  /** Root element or document to scan for input. Defaults to `document`. */
+  root?: Document | HTMLElement;
   /** CSS selector for the input that drives the runtime. Defaults to `[data-aidcs-input]`. */
   inputSelector?: string;
   /** Skip wiring DOM events when you only want the runtime instance. */
